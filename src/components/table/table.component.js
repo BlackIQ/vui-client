@@ -141,7 +141,7 @@ const TableComponent = ({ table, data, del, upd, add, addText, clk }) => {
             {renderRows.map((d) => (
               <TableRow
                 key={d}
-                onClick={() => clk && clk(d._id)}
+                onClick={() => clk && clk(d)}
                 sx={{
                   "&:hover": { cursor: "pointer", background: "#fafafa" },
                 }}
