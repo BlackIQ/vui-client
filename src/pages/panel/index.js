@@ -62,6 +62,7 @@ const Index = () => {
 
   useEffect(() => {
     if (!session) history.push("/auth");
+    if (role === "admin") history.push(`/panel/${user.username}`);
 
     getData();
   }, [session]);
@@ -118,8 +119,11 @@ const Index = () => {
               ? users.filter((user) => user.role === "client")
               : users
           }
+          clk={(client) => {
+            user.role === "god" && history.push(`/panel/${client.username}`);
+          }}
           add={() => setOpenAdd(true)}
-          del={(user) => delUser(user.username)}
+          del={(client) => delUser(user.client)}
           addText="افزودن کاربر جدید"
         />
       ) : (
