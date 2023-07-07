@@ -119,11 +119,11 @@ const Index = () => {
               ? users.filter((user) => user.role === "client")
               : users
           }
-          clk={(client) => {
-            user.role === "god" && history.push(`/panel/${client.username}`);
-          }}
+          // clk={(client) => {
+          //   user.role === "god" && history.push(`/panel/${client.username}`);
+          // }}
           add={() => setOpenAdd(true)}
-          del={(client) => delUser(user.client)}
+          del={(client) => delUser(client.username)}
           addText="افزودن کاربر جدید"
         />
       ) : (
