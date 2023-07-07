@@ -34,7 +34,10 @@ const Auth = () => {
 
   const authUser = async (callback) => {
     try {
-      const result = await API.post(`admins/login`, callback);
+      const result = await API.post(
+        callback.god ? `auth/login` : `admins/login`,
+        callback
+      );
 
       const { user } = result.data;
 
@@ -68,7 +71,7 @@ const Auth = () => {
             </Typography>
             <Divider />
             <Form
-              name="user"
+              name="auth"
               callback={authUser}
               button="ورود به پنل"
               btnStyle={{

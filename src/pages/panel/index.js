@@ -39,6 +39,8 @@ const Index = () => {
 
   const { session, user } = useSelector((state) => state);
 
+  const { role } = user;
+
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
 
@@ -46,7 +48,9 @@ const Index = () => {
     setLoading(true);
 
     try {
-      const { data } = await API.get(`clients/${user.username}`);
+      const { data } = await API.get(
+        role === "admin" ? `clients/${user.username}` : `admins`
+      );
 
       setUsers(data.data);
     } catch (error) {
@@ -90,7 +94,7 @@ const Index = () => {
   };
 
   const addUser = async (data) => {
-    data.isAdmin = false;
+    data.owner = user.username;
 
     try {
       await API.post("clients", data);
@@ -98,7 +102,7 @@ const Index = () => {
       setOpenAdd(false);
       createSnack("کاربر با موفقیت ساخته شد", "success");
 
-      history.replace(history.asPath);
+      getData();
     } catch (error) {
       createSnack(error.message, "error");
     }
@@ -109,7 +113,11 @@ const Index = () => {
       {!loading ? (
         <Table
           table="users"
-          data={users.filter((user) => user.isAdmin === 0)}
+          data={
+            role === "admin"
+              ? users.filter((user) => user.role === "client")
+              : users
+          }
           add={() => setOpenAdd(true)}
           del={(user) => delUser(user.username)}
           addText="افزودن کاربر جدید"
@@ -122,7 +130,7 @@ const Index = () => {
         <DialogTitle>افزودن کاربر</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            در این بخش میتوانید کاربر جدید اضافه نمایید{" "}
+            در این بخش میتوانید کاربر جدید اضافه نمایید
           </DialogContentText>
           <Form
             name="user"
