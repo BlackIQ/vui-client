@@ -14,10 +14,16 @@ const Auth = () => {
   const dispatch = useDispatch();
   const history = useRouter();
 
-  const { session } = useSelector((state) => state);
+  const { session, user } = useSelector((state) => state);
 
   useEffect(() => {
-    if (session) history.push("/panel");
+    if (session) {
+      if (user.role === "admin") {
+        history.push(`/panel/${user.username}`);
+      } else {
+        history.push(`/panel`);
+      }
+    }
   }, [session]);
 
   // Snackbar
