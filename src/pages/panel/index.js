@@ -83,7 +83,7 @@ const Index = () => {
 
   const delUser = async (username) => {
     try {
-      await API.delete(`clients/${username}`);
+      await API.delete(`admins/${username}`);
 
       setOpenAdd(false);
       createSnack("کاربر با موفقیت حذف شد", "success");
@@ -98,7 +98,7 @@ const Index = () => {
     data.owner = user.username;
 
     try {
-      await API.post("clients", data);
+      await API.post("admins/register", data);
 
       setOpenAdd(false);
       createSnack("کاربر با موفقیت ساخته شد", "success");
