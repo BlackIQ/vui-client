@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import { setSession } from "@/redux/actions/session";
-// import { setUser } from "@/redux/actions/user";
+import { setUser } from "@/redux/actions/user";
 
 import { Form } from "@/components";
 import API from "@/api";
@@ -34,11 +34,11 @@ const Auth = () => {
 
   const authUser = async (callback) => {
     try {
-      const result = await API.post(`auth/login`, callback);
+      const result = await API.post(`admins/login`, callback);
 
-      // const { user, token } = result.data;
+      const { user } = result.data;
 
-      // dispatch(setUser(user));
+      dispatch(setUser(user));
       dispatch(setSession(true));
     } catch (error) {
       createSnack(error.response.data.message, "error");

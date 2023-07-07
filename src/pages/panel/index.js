@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  CircularProgress,
 } from "@mui/material";
 
 import { useEffect, useState } from "react";
@@ -15,31 +16,50 @@ import { useSelector } from "react-redux";
 import { Table, Form } from "@/components";
 import API from "@/api";
 
-export const getServerSideProps = async () => {
-  try {
-    const users = await API.get(`users`);
+// export const getServerSideProps = async () => {
+//   try {
+//     const users = await API.get(`users`);
 
-    return {
-      props: {
-        users: users.data.data,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        error: { error: typeof error },
-      },
-    };
-  }
-};
+//     return {
+//       props: {
+//         users: users.data.data,
+//       },
+//     };
+//   } catch (error) {
+//     return {
+//       props: {
+//         error: { error: typeof error },
+//       },
+//     };
+//   }
+// };
 
-const Index = ({ error, users }) => {
+const Index = () => {
   const history = useRouter();
 
-  const { session } = useSelector((state) => state);
+  const { session, user } = useSelector((state) => state);
+
+  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState([]);
+
+  const getData = async () => {
+    setLoading(true);
+
+    try {
+      const { data } = await API.get(`clients/${user.username}`);
+
+      setUsers(data.data);
+    } catch (error) {
+      alert(error.message);
+    }
+
+    setLoading(false);
+  };
 
   useEffect(() => {
     if (!session) history.push("/auth");
+
+    getData();
   }, [session]);
 
   const [openAdd, setOpenAdd] = useState(false);
@@ -58,12 +78,12 @@ const Index = ({ error, users }) => {
 
   const delUser = async (username) => {
     try {
-      await API.delete(`users/${username}`);
+      await API.delete(`clients/${username}`);
 
       setOpenAdd(false);
       createSnack("کاربر با موفقیت حذف شد", "success");
 
-      history.replace(history.asPath);
+      getData();
     } catch (error) {
       createSnack(error.message, "error");
     }
@@ -73,7 +93,7 @@ const Index = ({ error, users }) => {
     data.isAdmin = false;
 
     try {
-      await API.post("users", data);
+      await API.post("clients", data);
 
       setOpenAdd(false);
       createSnack("کاربر با موفقیت ساخته شد", "success");
@@ -86,13 +106,17 @@ const Index = ({ error, users }) => {
 
   return (
     <Container sx={{ my: 3 }}>
-      <Table
-        table="users"
-        data={users.filter((user) => user.isAdmin === 0)}
-        add={() => setOpenAdd(true)}
-        del={(user) => delUser(user.username)}
-        addText="افزودن کاربر جدید"
-      />
+      {!loading ? (
+        <Table
+          table="users"
+          data={users.filter((user) => user.isAdmin === 0)}
+          add={() => setOpenAdd(true)}
+          del={(user) => delUser(user.username)}
+          addText="افزودن کاربر جدید"
+        />
+      ) : (
+        <CircularProgress />
+      )}
 
       <Dialog open={openAdd} onClose={() => setOpenAdd(false)}>
         <DialogTitle>افزودن کاربر</DialogTitle>
