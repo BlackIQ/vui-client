@@ -34,7 +34,7 @@ const NavBar = () => {
               }}
               onClick={() => history.push("/")}
             >
-              سرویس مدیریت مالی خانواده
+              VUI
             </Typography>
             <Button
               variant="text"
