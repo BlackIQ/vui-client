@@ -6,14 +6,21 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  CircularProgress,
+  Typography,
+  IconButton,
+  Box,
 } from "@mui/material";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-import { Table, Form } from "@/components";
+import { unsetUser } from "@/redux/actions/user";
+import { unsetSession } from "@/redux/actions/session";
+
+import { Logout } from "@mui/icons-material";
+
+import { Table, Form, Loading } from "@/components";
 import API from "@/api";
 
 // export const getServerSideProps = async () => {
@@ -36,6 +43,7 @@ import API from "@/api";
 
 const Index = () => {
   const history = useRouter();
+  const dispatch = useDispatch();
 
   const { session, user } = useSelector((state) => state);
 
@@ -109,8 +117,27 @@ const Index = () => {
     }
   };
 
+  const logout = () => {
+    dispatch(unsetSession());
+    dispatch(unsetUser());
+  };
+
   return (
     <Container sx={{ my: 3 }}>
+      <Box
+        sx={{
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Typography variant="h4">{user.name}</Typography>
+        <IconButton color="error" size="large" onClick={logout}>
+          <Logout fontSize="large" />
+        </IconButton>
+      </Box>
+      <br />
       {!loading ? (
         <Table
           table="users"
@@ -127,7 +154,7 @@ const Index = () => {
           addText="افزودن کاربر جدید"
         />
       ) : (
-        <CircularProgress />
+        <Loading />
       )}
 
       <Dialog open={openAdd} onClose={() => setOpenAdd(false)}>
