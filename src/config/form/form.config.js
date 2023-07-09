@@ -19,6 +19,12 @@ const forms = {
     },
   },
   user: {
+    name: {
+      type: "text",
+      label: "نام",
+      placeholder: "نام را وارد کنید",
+      secure: false,
+    },
     username: {
       type: "text",
       label: "نام کاربری",
