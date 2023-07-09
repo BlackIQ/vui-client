@@ -132,7 +132,7 @@ const Index = () => {
           justifyContent: "space-between",
         }}
       >
-        <Typography variant="h4">{user.name}</Typography>
+        <Typography variant="h4">خوش‌آمدید {user.name}!</Typography>
         <IconButton color="error" size="large" onClick={logout}>
           <Logout fontSize="large" />
         </IconButton>

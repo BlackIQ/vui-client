@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Typography,
   IconButton,
   Box,
 } from "@mui/material";
@@ -64,6 +65,7 @@ export const getServerSideProps = async ({ params }) => {
 
 const Index = ({ username }) => {
   const history = useRouter();
+  const dispatch = useDispatch();
 
   const { session, user } = useSelector((state) => state);
 
@@ -149,7 +151,7 @@ const Index = ({ username }) => {
           justifyContent: "space-between",
         }}
       >
-        <Typography variant="h4">{user.name}</Typography>
+        <Typography variant="h4">خوش‌آمدید {user.name}!</Typography>
         <IconButton color="error" size="large" onClick={logout}>
           <Logout fontSize="large" />
         </IconButton>
