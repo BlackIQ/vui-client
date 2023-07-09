@@ -22,6 +22,7 @@ import { Logout } from "@mui/icons-material";
 
 import { Table, Form, Loading } from "@/components";
 import API from "@/api";
+import Head from "next/head";
 
 export const getServerSidePaths = async () => {
   const paths = [];
@@ -142,61 +143,66 @@ const Index = ({ username }) => {
   };
 
   return (
-    <Container sx={{ my: 3 }}>
-      <Box
-        sx={{
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <Typography variant="h4">خوش‌آمدید {user.name}!</Typography>
-        <IconButton color="error" size="large" onClick={logout}>
-          <Logout fontSize="large" />
-        </IconButton>
-      </Box>
-      <br />
-      {!loading ? (
-        role === "admin" ? (
-          <Table
-            table="users"
-            data={users}
-            add={() => setOpenAdd(true)}
-            del={(user) => delUser(user.username)}
-            addText="افزودن کاربر جدید"
-          />
+    <>
+      <Head>
+        <title>VUI - پنل</title>
+      </Head>
+      <Container sx={{ my: 3 }}>
+        <Box
+          sx={{
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography variant="h4">خوش‌آمدید {user.name}!</Typography>
+          <IconButton color="error" size="large" onClick={logout}>
+            <Logout fontSize="large" />
+          </IconButton>
+        </Box>
+        <br />
+        {!loading ? (
+          role === "admin" ? (
+            <Table
+              table="users"
+              data={users}
+              add={() => setOpenAdd(true)}
+              del={(user) => delUser(user.username)}
+              addText="افزودن کاربر جدید"
+            />
+          ) : (
+            <Table table="users" data={users} />
+          )
         ) : (
-          <Table table="users" data={users} />
-        )
-      ) : (
-        <Loading />
-      )}
+          <Loading />
+        )}
 
-      <Dialog open={openAdd} onClose={() => setOpenAdd(false)}>
-        <DialogTitle>افزودن کاربر</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            در این بخش میتوانید کاربر جدید اضافه نمایید
-          </DialogContentText>
-          <Form
-            name="user"
-            callback={addUser}
-            btnStyle={{ fullWidth: false, disabled: false, color: "primary" }}
-            button="افزودن"
-          />
-        </DialogContent>
-      </Dialog>
-      <Snackbar
-        open={openSnack}
-        autoHideDuration={6000}
-        onClose={() => setOpenSnack(false)}
-      >
-        <Alert onClose={() => setOpenSnack(false)} severity={typeSnack}>
-          {messageSnack}
-        </Alert>
-      </Snackbar>
-    </Container>
+        <Dialog open={openAdd} onClose={() => setOpenAdd(false)}>
+          <DialogTitle>افزودن کاربر</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              در این بخش میتوانید کاربر جدید اضافه نمایید
+            </DialogContentText>
+            <Form
+              name="user"
+              callback={addUser}
+              btnStyle={{ fullWidth: false, disabled: false, color: "primary" }}
+              button="افزودن"
+            />
+          </DialogContent>
+        </Dialog>
+        <Snackbar
+          open={openSnack}
+          autoHideDuration={6000}
+          onClose={() => setOpenSnack(false)}
+        >
+          <Alert onClose={() => setOpenSnack(false)} severity={typeSnack}>
+            {messageSnack}
+          </Alert>
+        </Snackbar>
+      </Container>
+    </>
   );
 };
 

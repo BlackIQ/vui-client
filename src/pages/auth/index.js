@@ -9,6 +9,7 @@ import { Form } from "@/components";
 import API from "@/api";
 
 import { Box, Typography, Grid, Divider, Snackbar, Alert } from "@mui/material";
+import Head from "next/head";
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -55,57 +56,62 @@ const Auth = () => {
   };
 
   return (
-    <Box
-      sx={{
-        border: 1,
-        borderColor: "primary.main",
-        borderRadius: 1,
-        marginTop: "5rem",
-      }}
-    >
-      <Grid columns={{ xs: 6, md: 12 }} container>
-        <Grid
-          item
-          sx={{
-            padding: "2rem",
-          }}
-          xs={6}
-        >
-          <Box>
-            <Typography variant="h4" color="primary" gutterBottom>
-              ورود به پنل
-            </Typography>
-            <Divider />
-            <Form
-              name="auth"
-              callback={authUser}
-              button="ورود به پنل"
-              btnStyle={{
-                fullWidth: true,
-                disabled: false,
-              }}
-            />
-          </Box>
-        </Grid>
-        <Grid
-          item
-          xs={6}
-          sx={{
-            backgroundColor: "primary.main",
-          }}
-        />
-      </Grid>
-
-      <Snackbar
-        open={openSnack}
-        autoHideDuration={6000}
-        onClose={() => setOpenSnack(false)}
+    <>
+      <Head>
+        <title>VUI - ورود به پنل</title>
+      </Head>
+      <Box
+        sx={{
+          border: 1,
+          borderColor: "primary.main",
+          borderRadius: 1,
+          marginTop: "5rem",
+        }}
       >
-        <Alert onClose={() => setOpenSnack(false)} severity={typeSnack}>
-          {messageSnack}
-        </Alert>
-      </Snackbar>
-    </Box>
+        <Grid columns={{ xs: 6, md: 12 }} container>
+          <Grid
+            item
+            sx={{
+              padding: "2rem",
+            }}
+            xs={6}
+          >
+            <Box>
+              <Typography variant="h4" color="primary" gutterBottom>
+                ورود به پنل
+              </Typography>
+              <Divider />
+              <Form
+                name="auth"
+                callback={authUser}
+                button="ورود به پنل"
+                btnStyle={{
+                  fullWidth: true,
+                  disabled: false,
+                }}
+              />
+            </Box>
+          </Grid>
+          <Grid
+            item
+            xs={6}
+            sx={{
+              backgroundColor: "primary.main",
+            }}
+          />
+        </Grid>
+
+        <Snackbar
+          open={openSnack}
+          autoHideDuration={6000}
+          onClose={() => setOpenSnack(false)}
+        >
+          <Alert onClose={() => setOpenSnack(false)} severity={typeSnack}>
+            {messageSnack}
+          </Alert>
+        </Snackbar>
+      </Box>
+    </>
   );
 };
 
