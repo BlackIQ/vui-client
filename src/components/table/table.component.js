@@ -68,11 +68,23 @@ const TableComponent = ({ table, data, del, upd, add, addText, clk }) => {
 
     const v = props.reduce((acc, prop) => acc[prop], d);
 
-    switch (i) {
-      case "createdAt":
-        const td = new Date(d[i]);
+    const current = new Date();
+    const timestamp = new Date(d["timestamp"]);
 
-        return `${td.getFullYear()}/${td.getMonth()}/${td.getDay()} ${td.getHours()}:${td.getMinutes()}`;
+    switch (i) {
+      case "timestamp":
+        const year = timestamp.getFullYear();
+        const month = timestamp.getMonth() + 1;
+        const day = timestamp.getDate();
+
+        return `${year}/${month}/${day}`;
+      case "remind":
+        const timeDifferenceMs = timestamp - current;
+        const daysRemaining = Math.ceil(
+          timeDifferenceMs / (1000 * 60 * 60 * 24)
+        );
+
+        return daysRemaining;
       default:
         return v;
     }

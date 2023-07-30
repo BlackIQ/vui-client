@@ -148,24 +148,28 @@ const Index = ({ username }) => {
         <title>VUI - پنل</title>
       </Head>
       <Container sx={{ my: 3 }}>
-        <Box
-          sx={{
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography variant="h4">خوش‌آمدید {user.name}!</Typography>
-          <IconButton color="error" size="large" onClick={logout}>
-            <Logout fontSize="large" />
-          </IconButton>
-        </Box>
-        <br />
+        {role === "admin" && (
+          <>
+            <Box
+              sx={{
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Typography variant="h4">خوش‌آمدید {user.name}!</Typography>
+              <IconButton color="error" size="large" onClick={logout}>
+                <Logout fontSize="large" />
+              </IconButton>
+            </Box>
+            <br />
+          </>
+        )}
         {!loading ? (
-          role === "admin" ? (
+          ["admin", "god"].includes(role) ? (
             <Table
-              table="users"
+              table="clients"
               data={users}
               add={() => setOpenAdd(true)}
               del={(user) => delUser(user.username)}

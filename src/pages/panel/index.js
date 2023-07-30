@@ -145,7 +145,7 @@ const Index = () => {
         <br />
         {!loading ? (
           <Table
-            table="users"
+            table="admins"
             data={
               role === "admin"
                 ? users.filter((user) => user.role === "client")
