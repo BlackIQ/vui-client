@@ -72,6 +72,7 @@ const Index = ({ username }) => {
 
   const { role } = user;
 
+  // Loading
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
 
@@ -110,6 +111,8 @@ const Index = ({ username }) => {
   };
 
   const delUser = async (username) => {
+    setLoading(true);
+
     try {
       await API.delete(`clients/${username}`);
 
@@ -120,9 +123,13 @@ const Index = ({ username }) => {
     } catch (error) {
       createSnack(error.message, "error");
     }
+
+    setLoading(false);
   };
 
   const addUser = async (data) => {
+    setLoading(true);
+
     data.owner = user.username;
 
     try {
@@ -135,6 +142,8 @@ const Index = ({ username }) => {
     } catch (error) {
       createSnack(error.message, "error");
     }
+
+    setLoading(false);
   };
 
   const logout = () => {
@@ -191,7 +200,11 @@ const Index = ({ username }) => {
             <Form
               name="user"
               callback={addUser}
-              btnStyle={{ fullWidth: false, disabled: false, color: "primary" }}
+              btnStyle={{
+                fullWidth: false,
+                disabled: loading,
+                color: "primary",
+              }}
               button="افزودن"
             />
           </DialogContent>

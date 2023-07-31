@@ -27,6 +27,9 @@ const Auth = () => {
     }
   }, [session]);
 
+  // Loading
+  const [loading, setLoading] = useState(false);
+
   // Snackbar
   const [openSnack, setOpenSnack] = useState(false);
   const [messageSnack, setMessageSnack] = useState("");
@@ -40,6 +43,8 @@ const Auth = () => {
   };
 
   const authUser = async (callback) => {
+    setLoading(true);
+
     try {
       const result = await API.post(
         callback.god ? `auth/login` : `admins/login`,
@@ -53,6 +58,8 @@ const Auth = () => {
     } catch (error) {
       createSnack(error.response.data.message, "error");
     }
+
+    setLoading(false);
   };
 
   return (
@@ -87,7 +94,7 @@ const Auth = () => {
                 button="ورود به پنل"
                 btnStyle={{
                   fullWidth: true,
-                  disabled: false,
+                  disabled: loading,
                 }}
               />
             </Box>
