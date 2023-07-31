@@ -68,7 +68,6 @@ const TableComponent = ({ table, data, del, upd, add, addText, clk }) => {
 
     const v = props.reduce((acc, prop) => acc[prop], d);
 
-    const current = new Date();
     const timestamp = new Date(d["timestamp"]);
 
     switch (i) {
@@ -79,7 +78,11 @@ const TableComponent = ({ table, data, del, upd, add, addText, clk }) => {
 
         return `${year}/${month}/${day}`;
       case "remind":
-        const timeDifferenceMs = timestamp - current;
+        const thirtyDaysLater = new Date(d["timestamp"]);
+        thirtyDaysLater.setDate(thirtyDaysLater.getDate() + 30);
+
+        const current = new Date();
+        const timeDifferenceMs = thirtyDaysLater - current;
         const daysRemaining = Math.ceil(
           timeDifferenceMs / (1000 * 60 * 60 * 24)
         );
