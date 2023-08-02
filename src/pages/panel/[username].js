@@ -180,9 +180,17 @@ const Index = ({ username }) => {
             <Table
               table="clients"
               data={users}
-              add={() => setOpenAdd(true)}
-              del={(user) => delUser(user.username)}
-              addText="افزودن کاربر جدید"
+              add={() =>
+                role === "admin"
+                  ? setOpenAdd(true)
+                  : createSnack("با اکانت ادمین لاگین کنید", "info")
+              }
+              del={(user) =>
+                role === "admin"
+                  ? delUser(user.username)
+                  : createSnack("با اکانت ادمین لاگین کنید", "info")
+              }
+              addText={"افزودن کاربر جدید"}
             />
           ) : (
             <Table table="users" data={users} />
