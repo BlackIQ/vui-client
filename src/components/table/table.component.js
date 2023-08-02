@@ -17,6 +17,8 @@ import {
   Alert,
 } from "@mui/material";
 
+import { format } from "date-fns-jalali";
+
 import { CopyAll, Delete, Edit } from "@mui/icons-material";
 
 import { tables } from "@/config";
@@ -112,15 +114,9 @@ const TableComponent = ({ table, data, del, upd, add, addText, clk }) => {
 
     const v = props.reduce((acc, prop) => acc[prop], d);
 
-    const timestamp = new Date(d["timestamp"]);
-
     switch (i) {
       case "timestamp":
-        const year = timestamp.getFullYear();
-        const month = timestamp.getMonth() + 1;
-        const day = timestamp.getDate();
-
-        return `${year}/${month}/${day}`;
+        return format(new Date(d["timestamp"]), "yyyy/MM/dd");
       case "remind":
         const thirtyDaysLater = new Date(d["timestamp"]);
         thirtyDaysLater.setDate(thirtyDaysLater.getDate() + 30);
