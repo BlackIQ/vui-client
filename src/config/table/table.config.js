@@ -22,6 +22,18 @@ const tables = {
       copy: "کپی کانفیگ",
     },
   },
+  all: {
+    title: "لیست همه",
+    fields: {
+      name: "نام",
+      username: "نام کاربری",
+      username: "سازنده",
+      password: "رمز ورورد",
+      timestamp: "تاریخ ساخت",
+      remind: "مانده",
+      copy: "کپی کانفیگ",
+    },
+  },
 };
 
 export default tables;
