@@ -12,6 +12,18 @@ const theme = createTheme({
   typography: {
     fontFamily: "Vazirmatn",
   },
+  components: {
+    MuiDialog: {
+      defaultProps: {
+        dir: "rtl",
+      },
+    },
+    MuiSnackbar: {
+      defaultProps: {
+        dir: "rtl",
+      },
+    },
+  },
 });
 
 export default theme;

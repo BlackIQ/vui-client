@@ -7,6 +7,7 @@ const tables = {
       password: "رمز ورورد",
       timestamp: "تاریخ ساخت",
       delete: "حذف کاربر",
+      copy: "کپی کانفیگ",
     },
   },
   clients: {
@@ -18,6 +19,7 @@ const tables = {
       timestamp: "تاریخ ساخت",
       remind: "مانده",
       delete: "حذف کاربر",
+      copy: "کپی کانفیگ",
     },
   },
 };

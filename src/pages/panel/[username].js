@@ -212,6 +212,7 @@ const Index = ({ username }) => {
         <Snackbar
           open={openSnack}
           autoHideDuration={6000}
+          sx={{ direction: "ltr", textAlign: "left" }}
           onClose={() => setOpenSnack(false)}
         >
           <Alert onClose={() => setOpenSnack(false)} severity={typeSnack}>
