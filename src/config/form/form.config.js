@@ -37,7 +37,7 @@ const forms = {
       placeholder: "رمز ورود را وارد کنید",
       secure: true,
     },
-    days: {
+    expire: {
       type: "number",
       label: "مدت زمان",
       placeholder: "مدت زمان را وارد کنید",

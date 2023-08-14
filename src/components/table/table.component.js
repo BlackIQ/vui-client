@@ -117,12 +117,13 @@ const TableComponent = ({ table, data, del, upd, add, addText, clk }) => {
     switch (i) {
       case "timestamp":
         return format(new Date(d["timestamp"]), "yyyy/MM/dd");
+      case "expire":
+        return format(new Date(d["expire"]), "yyyy/MM/dd");
       case "remind":
-        const thirtyDaysLater = new Date(d["timestamp"]);
-        thirtyDaysLater.setDate(thirtyDaysLater.getDate() + 30);
-
+        const expirationTime = new Date(d["expire"]);
         const current = new Date();
-        const timeDifferenceMs = thirtyDaysLater - current;
+
+        const timeDifferenceMs = expirationTime - current;
         const daysRemaining = Math.ceil(
           timeDifferenceMs / (1000 * 60 * 60 * 24)
         );
