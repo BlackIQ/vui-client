@@ -158,7 +158,7 @@ const Index = ({ username }) => {
       : "دسترسی کاربر با موفقیت فعال شد";
 
     try {
-      await API.patch(`clients/${data.username}`, sendingData);
+      await API.patch(`clients/access/${data.username}`, sendingData);
 
       setOpenAdd(false);
       createSnack(message, "success");
