@@ -19,6 +19,7 @@ const tables = {
       timestamp: "تاریخ ساخت",
       expire: "تاریخ اتمام",
       remind: "مانده",
+      acs: "دسترسی",
       delete: "حذف کاربر",
       copy: "کپی کانفیگ",
     },

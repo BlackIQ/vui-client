@@ -15,6 +15,7 @@ import {
   colors,
   Snackbar,
   Alert,
+  Switch,
 } from "@mui/material";
 
 import { format } from "date-fns-jalali";
@@ -25,7 +26,7 @@ import { tables } from "@/config";
 
 import { useEffect, useState } from "react";
 
-const TableComponent = ({ table, data, del, upd, add, addText, clk }) => {
+const TableComponent = ({ table, data, del, upd, add, addText, clk, acs }) => {
   const tbl = tables[table];
 
   const [page, setPage] = useState(1);
@@ -90,6 +91,17 @@ const TableComponent = ({ table, data, del, upd, add, addText, clk }) => {
               <IconButton key={`Upd-${index}`} onClick={() => upd(d)}>
                 <Edit color="info" />
               </IconButton>
+            </Box>
+          ))
+      );
+    }
+
+    if (acs) {
+      data.map(
+        (d, index) =>
+          (d["acs"] = (
+            <Box sx={{ w: "100%", textAlign: "center" }}>
+              <Switch checked={d.access} onClick={() => acs(d)} />
             </Box>
           ))
       );

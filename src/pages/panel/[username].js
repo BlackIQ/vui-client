@@ -146,6 +146,31 @@ const Index = ({ username }) => {
     setLoading(false);
   };
 
+  const userAccess = async (data) => {
+    setLoading(true);
+
+    const sendingData = {
+      access: !data.access,
+    };
+
+    const message = data.access
+      ? "دسترسی کاربر با موفقیت قطع شد"
+      : "دسترسی کاربر با موفقیت فعال شد";
+
+    try {
+      await API.patch(`clients/${data.username}`, sendingData);
+
+      setOpenAdd(false);
+      createSnack(message, "success");
+
+      getData();
+    } catch (error) {
+      createSnack(error.message, "error");
+    }
+
+    setLoading(false);
+  };
+
   const logout = () => {
     dispatch(unsetSession());
     dispatch(unsetUser());
@@ -191,6 +216,11 @@ const Index = ({ username }) => {
                   : createSnack("با اکانت ادمین لاگین کنید", "info")
               }
               addText={"افزودن کاربر جدید"}
+              acs={(data) =>
+                role === "admin"
+                  ? userAccess(data)
+                  : createSnack("با اکانت ادمین لاگین کنید", "info")
+              }
             />
           ) : (
             <Table table="users" data={users} />
